@@ -7,7 +7,7 @@
 
 set -e
 
-url="https://github.com/SmartFinn/eve-ng-integration/archive/master.tar.gz"
+url="https://github.com/Mutilador/eve-ng-integration/archive/master.tar.gz"
 
 _command_exists() { command -v "$@" > /dev/null 2>&1; }
 _msg() { echo "=>" "$@" >&2; }
@@ -40,6 +40,8 @@ do_install() {
 
 	_msg "Installing..."
 	sudo mkdir -p /usr/bin
+	sudo wget 'https://download.mikrotik.com/routeros/winbox/3.13/winbox.exe' -o /usr/local/bin/winbox
+	sudo chmod +x /usr/local/bin/winbox
 	sudo install -m 755 "$temp_dir/bin/eve-ng-integration" /usr/bin/
 	sudo install -m 755 "$temp_dir/bin/eni-rdp-wrapper" /usr/bin/
 	sudo mkdir -p /usr/share/applications
@@ -96,31 +98,31 @@ for dist_id in $ID $ID_LIKE; do
 		debian|ubuntu)
 			_msg "Install dependencies..."
 			sudo apt-get install -y ${PYTHON-"python"} \
-				ssh-askpass telnet vinagre wireshark
+				ssh-askpass telnet vinagre wireshark wine
 			do_install
 			;;
 		arch|archlinux|manjaro)
 			_msg "Install dependencies..."
 			sudo pacman -S ${PYTHON-"python"} \
-				inetutils vinagre wireshark-qt x11-ssh-askpass
+				inetutils vinagre wireshark-qt x11-ssh-askpass wine
 			do_install
 			;;
 		fedora)
 			_msg "Install dependencies..."
 			sudo dnf install -y ${PYTHON-"python"} \
-				openssh-askpass telnet vinagre wireshark-qt
+				openssh-askpass telnet vinagre wireshark-qt wine
 			do_install
 			;;
 		opensuse|suse)
 			_msg "Install dependencies..."
 			sudo zypper install -y ${PYTHON-"python"} \
-				openssh-askpass telnet vinagre wireshark-ui-qt
+				openssh-askpass telnet vinagre wireshark-ui-qt wine
 			do_install
 			;;
 		centos|CentOS|rhel)
 			_msg "Install dependencies..."
 			sudo yum install -y ${PYTHON-"python"} \
-				openssh-askpass telnet vinagre wireshark-gnome
+				openssh-askpass telnet vinagre wireshark-gnome wine
 			do_install
 			;;
 		*)

@@ -90,6 +90,10 @@ def main(argv):
         cmd = 'telnet {host} {port}'.format(**data)
 
         term.execute(cmd)
+    elif url.scheme == 'winbox':
+	cmd = 'wine winbox {host}:{port}'.format(**data)
+	
+	term.execute(cmd)
     else:
         return '{}: The protocol {} is not supported.'.format(url.geturl(),
                                                               url.scheme)
